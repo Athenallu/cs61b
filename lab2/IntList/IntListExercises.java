@@ -10,14 +10,14 @@ public class IntListExercises {
      */
     public static void addConstant(IntList lst, int c) {
         IntList head = lst;
-        while (head.rest != null) {
+        while (head != null) {  //should be head != null instead of head.rest != null
             head.first += c;
             head = head.rest;
         }
     }
 
     /**
-     * Part B: Buggy method that sets node.first to zero if
+     * Part B: Buggy method that sets node. first to zero if
      * the max value in the list starting at node has the same
      * first and last digit, for every node in L
      *
@@ -26,9 +26,13 @@ public class IntListExercises {
     public static void setToZeroIfMaxFEL(IntList L) {
         IntList p = L;
         while (p != null) {
+            int currentMax = max(p);
+            boolean fel = firstDigitEqualsLastDigit(currentMax);
+            if (fel) p.first = 0;
+            /**
             if (firstDigitEqualsLastDigit(max(p))) {
                 p.first = 0;
-            }
+            } */
             p = p.rest;
         }
     }
@@ -51,7 +55,7 @@ public class IntListExercises {
      */
     public static boolean firstDigitEqualsLastDigit(int x) {
         int lastDigit = x % 10;
-        while (x > 10) {
+        while (x >= 10) {  // >= instead of >
             x = x / 10;
         }
         int firstDigit = x % 10;
@@ -70,13 +74,11 @@ public class IntListExercises {
         if (lst == null) {
             return false;
         }
-
         boolean currElemIsPrime = Primes.isPrime(lst.first);
-
         if (currElemIsPrime) {
             lst.first *= lst.first;
         }
-
-        return currElemIsPrime || squarePrimes(lst.rest);
+        //return currElemIsPrime || squarePrimes(lst.rest);
+        return squarePrimes(lst.rest) || currElemIsPrime;
     }
 }
